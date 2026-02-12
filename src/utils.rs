@@ -150,3 +150,19 @@ pub fn find_exercise_name_from_path(path: &Path) -> Option<String> {
         .and_then(|s| s.to_str())
         .map(|s| s.to_string())
 }
+pub fn find_exercise_by_prefix(prefix: &str) -> Result<String, String> {
+    let exercises = get_exercises();
+    let mut matches: Vec<_> = exercises
+        .iter()
+        .filter(|e| e.starts_with(prefix))
+        .collect();
+
+    match matches.len() {
+        1 => Ok(matches.remove(0).clone()),
+        0 => Err(format!("No exercise found with prefix '{}'", prefix)),
+        _ => Err(format!(
+            "Multiple exercises found with prefix '{}': {:?}",
+            prefix, matches
+        )),
+    }
+}

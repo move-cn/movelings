@@ -84,12 +84,12 @@ pub fn check_exercise(name: &str) -> bool {
     }
 }
 
-pub fn show_hint(exercise: &str) {
+pub fn show_hint(exercise: &str) -> bool {
     println!();
     println!("{} Hints for exercise '{}':", "💡".yellow(), exercise.bold());
-    
+
     let hints = extract_hints_from_exercise(exercise);
-    
+
     if hints.is_empty() {
         show_default_hints();
     } else {
@@ -97,10 +97,11 @@ pub fn show_hint(exercise: &str) {
             println!("  {}. {}", i + 1, hint.italic());
         }
     }
-    
+
     println!();
     println!("{} Exercise file location:", "📝".blue());
     println!("   {}", format!("exercises/{}/sources/", exercise).cyan());
+    true
 }
 
 pub fn reset_progress() {
